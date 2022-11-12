@@ -1,0 +1,54 @@
+include<iostream>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+const int n = 6;  
+ 
+struct Train { 
+ char pn [21];
+ unsigned int num;
+ char time [6];
+};
+ 
+void Copy (Train &pest, Train bust) 
+{
+ strcpy (pest.pn, bust.pn);
+ strcpy (pest.time, bust.time);
+ pest.num = bust.num;
+}
+ 
+int main(void)
+{
+ Train a[n];
+ int i = 0;
+ for (i=0; i<n; i++) { 
+  cout << "Vvedite punkt naznachenia: ";
+  cin >> a[i].pn;
+  cout << "Vvedite nomer poezda: ";
+  cin >> a[i].num;
+  cout << "Vvedite vremia otpravlenia: ";
+  cin >> a[i].time;
+ }
+ 
+ Train buf; int k; 
+ for (i=0; i<n-1; i++)
+  for (k=0; k<n-1; k++)
+   if (strcmp (a[k].time, a[k+1].time)>0) {
+    Copy (buf, a[k]);
+    Copy (a[k], a[k+1]);
+    Copy (a[k+1], buf);
+   }
+ 
+ char pp [21]; 
+ cout << "Vvedite punkt: ";
+ cin >> pp;
+ bool f = false; 
+ for (i=0; i<n; i++)
+  if (strcmp (a[i].pn, pp)==0) { 
+   cout << "Poezd #" << a[i].num << ' ' << a[i].time << ' ';
+   f = true;
+  }
+ if (!f) cout << "Net takih poezdov"; 
+ 
+ return 0;
+}
